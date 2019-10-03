@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"></script>
+</head>
+<body>
+
+    <input type="text" id="search" placeholder="catch them all!">
+    <button id="submit">Search!</button>
+
+    <h1 id="pokemon-name"></h1>
+    <img id="pokemon-image" src="" alt="">
+    <p id="moves"></p>
+
+    <script>
+    window.onload = function() {
+        var name = document.getElementById("pokemon-name")
+        var image = document.getElementById("pokemon-image")
+        var moves = document.getElementById("moves")
+        var searchInput = document.getElementById("search")
+        var submitButton = document.getElementById("submit")
+
+        submitButton.addEventListener("click", function(event){
+            var searchValue = searchInput.value
+            axios.get(`https://pokeapi.co/api/v2/pokemon/${searchValue}/`)
+            .then((response)=> {
+                name.innerHTML = response.data.name
+                image.setAttribute("src", response.data.sprites.front_default)
+                moves.innerHTML = response.data.moves.length
+            })
+            .catch((error)=> {
+                // to do: proper error handling
+            })
+        })
+    }    
+
+    </script>
+</body>
+</html>
